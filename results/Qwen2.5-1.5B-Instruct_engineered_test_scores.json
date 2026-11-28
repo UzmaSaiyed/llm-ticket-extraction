@@ -1,0 +1,9 @@
+{
+  "json_validity": 1.0,
+  "exact_match": 0.5123456790123457,
+  "category_accuracy": 0.720164609053498,
+  "intent_accuracy": 0.6584362139917695,
+  "field_precision": 0.6893004115226338,
+  "field_recall": 0.6893004115226338,
+  "field_f1": 0.6893004115226338
+}

@@ -1,0 +1,9 @@
+{
+  "json_validity": 1.0,
+  "exact_match": 0.0,
+  "category_accuracy": 0.0,
+  "intent_accuracy": 0.0,
+  "field_precision": 0.0,
+  "field_recall": 0.0,
+  "field_f1": 0.0
+}
