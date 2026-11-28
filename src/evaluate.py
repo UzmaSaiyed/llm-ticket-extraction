@@ -41,6 +41,7 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--out", default="outputs")
+    parser.add_argument("--adapter", default=None, help="folder of a trained LoRA adapter")
     args = parser.parse_args()
 
     if args.split == "test" and not args.final:
@@ -54,6 +55,10 @@ def main() -> None:
     model = AutoModelForCausalLM.from_pretrained(
         args.model, torch_dtype=torch.float16, device_map="auto"
     )
+    if args.adapter:
+        from peft import PeftModel
+
+        model = PeftModel.from_pretrained(model, args.adapter)
     model.eval()
 
     prompts = [build_prompt(args.prompt, text) for text in df["text"]]
@@ -63,7 +68,8 @@ def main() -> None:
 
     out_dir = Path(args.out)
     out_dir.mkdir(exist_ok=True)
-    name = f"{args.model.split('/')[-1]}_{args.prompt}_{args.split}"
+    label = Path(args.adapter).name if args.adapter else args.model.split("/")[-1]
+    name = f"{label}_{args.prompt}_{args.split}"
     df.assign(prediction=predictions).to_json(
         out_dir / f"{name}_predictions.jsonl", orient="records", lines=True, force_ascii=False
     )
