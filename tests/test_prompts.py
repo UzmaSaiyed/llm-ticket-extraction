@@ -1,6 +1,6 @@
 import pytest
 
-from src.prompts import EXAMPLES, INTENT_HINTS, build_prompt
+from src.prompts import EXAMPLES, build_prompt
 from src.schema import INTENT_TO_CATEGORY, INTENTS
 
 
@@ -22,7 +22,3 @@ def test_message_is_included_in_both_prompts():
 def test_unknown_prompt_kind_is_rejected():
     with pytest.raises(ValueError):
         build_prompt("other", "hello")
-
-
-def test_hints_use_valid_intents():
-    assert set(INTENT_HINTS) <= set(INTENTS)
